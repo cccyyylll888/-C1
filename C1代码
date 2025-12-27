@@ -43,7 +43,7 @@ BigInt eleven;
 BigInt thirteen;
 BigInt seventeen;
 BigInt candidate; 
-
+BigInt test_cnt[15]; 
 /*
  * initial(): 初始化随机数种子并设置若干常用小整数的 BigInt 表示
  */
@@ -466,7 +466,8 @@ int Miller_Rabin(BigInt a)
     for(int i = 1;i <= 10;i++)
     {
         BigInt test;
-        test = generate_number(1);
+        test = generate_number(10);
+        test_cnt[i] = test;
         long long k = 0;
         BigInt test1 = a;
         test1.num[1] -= 1;
@@ -518,13 +519,15 @@ int main()
     int cnt = 0;  
     while(!Miller_Rabin(candidate))
     {
-        printf("%d\n",++cnt); 
         candidate = generate_number(64);
-        printf("%lf\n",(clock()-start)/1000);
         start = clock();
     }
     print_hex(candidate);
-    printf("%lf\n",(clock()-start1)/1000);
+    printf("\n以下是用于测试的10个数\n");
+    for(int i = 1;i <= 10;i++)
+    {
+    	print_hex(test_cnt[i]);
+	}
     // 将生成的素数以 16 进制追加保存到 prime_hex.txt
     {
         FILE *fp = fopen("prime_hex.txt", "a");
